@@ -1,0 +1,47 @@
+package gofu
+
+import "testing"
+
+type testConsumer struct{
+	t *testing.T
+	after Consumer(string)
+}
+func (c testConsumer) Accept(v string) {
+	c.t.Log(v)
+	if c.after != nil {
+		c.after.Accept(v)
+	}
+}
+
+func (c testConsumer) AndThen(after Consumer(string)) Consumer(string) {
+	c.after = after
+	return c
+}
+
+func TestConsumer(t *testing.T) {
+	tc := testConsumer{t:t}
+	tc.Accept("hello")
+	tc.AndThen(testConsumer{t:t}).Accept("world")
+}
+
+type testBiConsumer struct{
+	t *testing.T
+	after BiConsumer(string,int)
+}
+func (c testBiConsumer) Accept(v string, i int) {
+	c.t.Logf("%s,%d",v,i)
+	if c.after != nil {
+		c.after.Accept(v,i)
+	}
+}
+
+func (c testBiConsumer) AndThen(after BiConsumer(string,int)) BiConsumer(string,int) {
+	return after
+}
+
+func TestBiConsumer(t *testing.T) {
+	tc := testBiConsumer{t:t}
+	tc.Accept("hello",100)
+	tc.AndThen(testBiConsumer{t:t}).Accept("world",200)
+}
+

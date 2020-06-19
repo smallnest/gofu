@@ -1,0 +1,19 @@
+package gofu
+
+// G defines a common type contraint.
+type G interface{}
+
+// Ordered defines type contraint that can be compared with standard comparison operators (e.g. > and <).
+type Ordered interface {
+	type int,int8,int16,int32,int64,
+		 uint,uint16,uint32,uint64,
+		 float32,float64,
+		 complex64,complex128,
+		 byte,uintptr,string
+}
+
+
+// Comparator represents a comparison function, which imposes a total ordering on some collection of objects. 
+type Comparator(type T) interface {
+	Comparator(o1 T, o2 T) int
+}

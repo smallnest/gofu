@@ -1,0 +1,50 @@
+package gofu
+
+
+// Function represents a function that accepts one argument and produces a result.
+type Function(type T,R) interface {
+	// AndThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
+	AndThen(after Function(T,R)) Function(T,R)
+	// Apply applies this function to the given argument.
+	Apply(t T) R
+	// Compose returns a composed function that first applies the before function to its input, and then applies this function to the result.
+	Compose(before Function(T,R)) Function(T,R)
+	// Identity returns a function that always returns its input argument.
+	Identity() Function(T,T)
+}
+
+// UnaryOperator represents an operation on a single operand that produces a result of the same type as its operand. 
+// This is a specialization of Function for the case where the operand and result are of the same type.
+type UnaryOperator(type T) interface {
+	// AndThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
+	AndThen(after Function(T,T)) Function(T,T)
+	// Apply applies this function to the given argument.
+	Apply(t T) T
+	// Compose returns a composed function that first applies the before function to its input, and then applies this function to the result.
+	Compose(before Function(T,T)) Function(T,T)
+	// Identity returns a unary operator that always returns its input argument.
+	Identity() UnaryOperator(T)
+}
+
+// BiFunction represents a function that accepts two arguments and produces a result. 
+// This is the two-arity specialization of Function.
+type BiFunction(type T,U,R) interface {
+	// AndThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
+	AndThen(after Function(R,R)) BiFunction(T,U,R)
+	// Applies this function to the given arguments.
+	Apply(t T, u U) R
+}
+
+
+// BinaryOperator represents an operation upon two operands of the same type, producing a result of the same type as the operands. 
+// This is a specialization of BiFunction for the case where the operands and the result are all of the same type.
+type BinaryOperator(type T) interface {
+	// AndThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
+	AndThen(after Function(T,T)) BiFunction(T,T,T)
+	// Applies this function to the given arguments.
+	Apply(t T, t2 T) T
+	// MaxBy returns a BinaryOperator which returns the greater of two elements according to the specified Comparator.
+	MaxBy(c Comparator(T)) BinaryOperator(T)
+	// MinBy returns a BinaryOperator which returns the lesser of two elements according to the specified Comparator.
+	MinBy(c Comparator(T)) BinaryOperator(T)
+}

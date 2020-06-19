@@ -1,0 +1,20 @@
+package gofu
+
+// Consumer represents an operation that accepts a single input argument and returns no result. 
+// Unlike most other functional interfaces, Consumer is expected to operate via side-effects.
+type Consumer(type T) interface {
+	// Accept performs this operation on the given argument.
+	Accept(T)
+	// AndThen​ returns a composed Consumer that performs, in sequence, this operation followed by the after operation.
+	AndThen(after Consumer(T)) Consumer(T)
+}
+
+// BiConsumer represents an operation that accepts two input arguments and returns no result. 
+// This is the two-arity specialization of Consumer. 
+// Unlike most other functional interfaces, BiConsumer is expected to operate via side-effects.
+type BiConsumer(type T,U) interface {
+	// Accept performs this operation on the given argument.
+	Accept(t T, u U)
+	// AndThen​ returns a composed Consumer that performs, in sequence, this operation followed by the after operation.
+	AndThen(after BiConsumer(T,U)) BiConsumer(T,U)
+}

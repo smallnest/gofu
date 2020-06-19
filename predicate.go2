@@ -1,0 +1,28 @@
+package gofu
+
+// Predicate represents a predicate (boolean-valued function) of one argument.
+type Predicate(type T) interface {
+	// And returns a composed predicate that represents a short-circuiting logical AND of this predicate and another.
+	And(p Predicate(T)) Predicate(T)
+	// Predicate returns a predicate that represents the logical negation of this predicate.
+	Negate() Predicate(T)
+	// Not returns a predicate that is the negation of the supplied predicate.
+	Not() Predicate(T)
+	// Predicate returns a composed predicate that represents a short-circuiting logical OR of this predicate and another.
+	Or() Predicate(T)
+	// Test​ evaluates this predicate on the given argument.
+	Test(t T)
+}
+
+// BiPredicate represents a predicate (boolean-valued function) of two arguments. 
+// This is the two-arity specialization of Predicate.
+type BiPredicate(type T,U) interface {
+	// And returns a composed predicate that represents a short-circuiting logical AND of this predicate and another.
+	And(p BiPredicate(T,U)) BiPredicate(T,U)
+	// Predicate returns a predicate that represents the logical negation of this predicate.
+	Negate() BiPredicate(T,U)
+	// Predicate returns a composed predicate that represents a short-circuiting logical OR of this predicate and another.
+	Or() BiPredicate(T,U)
+	// Test​ evaluates this predicate on the given arguments.
+	Test(t T,u U)
+}
