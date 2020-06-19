@@ -1,5 +1,10 @@
 package gofu
 
+// Apply applies this function to the given argument.
+type Apply(type T,R) func(t T) R
+
+// BiApply applies this function to the given arguments.
+type BiApply(type T,U,R) func(t T, u U) R
 
 // Function represents a function that accepts one argument and produces a result.
 type Function(type T,R) interface {
@@ -27,7 +32,7 @@ type UnaryOperator(type T) interface {
 type BiFunction(type T,U,R) interface {
 	// AndThen returns a composed function that first applies this function to its input, and then applies the after function to the result.
 	AndThen(after Function(R,R)) BiFunction(T,U,R)
-	// Applies this function to the given arguments.
+	// Apply applies this function to the given arguments.
 	Apply(t T, u U) R
 }
 

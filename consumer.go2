@@ -1,5 +1,11 @@
 package gofu
 
+// Accept performs this operation on the given argument.
+type Accept(type T) func(T)
+
+// BiAccept performs this operation on the given argument.
+type BiAccept(type T,U) func(T,U)
+
 // Consumer represents an operation that accepts a single input argument and returns no result. 
 // Unlike most other functional interfaces, Consumer is expected to operate via side-effects.
 type Consumer(type T) interface {

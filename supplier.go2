@@ -1,5 +1,8 @@
 package gofu
 
+// Supply gets a result.
+type Supply(type T) func() T
+
 // Supplier represents a supplier of results.
 // There is no requirement that a new or distinct result be returned each time the supplier is invoked.
 type Supplier(type T) interface {
