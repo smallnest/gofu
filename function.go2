@@ -9,8 +9,6 @@ type Function(type T,R) interface {
 	Apply(t T) R
 	// Compose returns a composed function that first applies the before function to its input, and then applies this function to the result.
 	Compose(before Function(T,R)) Function(T,R)
-	// Identity returns a function that always returns its input argument.
-	Identity() Function(T,T)
 }
 
 // UnaryOperator represents an operation on a single operand that produces a result of the same type as its operand. 
@@ -22,8 +20,6 @@ type UnaryOperator(type T) interface {
 	Apply(t T) T
 	// Compose returns a composed function that first applies the before function to its input, and then applies this function to the result.
 	Compose(before Function(T,T)) Function(T,T)
-	// Identity returns a unary operator that always returns its input argument.
-	Identity() UnaryOperator(T)
 }
 
 // BiFunction represents a function that accepts two arguments and produces a result. 

@@ -6,8 +6,6 @@ type Predicate(type T) interface {
 	And(p Predicate(T)) Predicate(T)
 	// Predicate returns a predicate that represents the logical negation of this predicate.
 	Negate() Predicate(T)
-	// Not returns a predicate that is the negation of the supplied predicate.
-	Not() Predicate(T)
 	// Predicate returns a composed predicate that represents a short-circuiting logical OR of this predicate and another.
 	Or() Predicate(T)
 	// Test​ evaluates this predicate on the given argument.
