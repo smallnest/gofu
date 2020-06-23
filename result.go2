@@ -1,0 +1,43 @@
+package gofu
+
+// Result can hold either value or error, just like in rust and scala.
+type Result(type T) struct {
+	Value T
+	Err   error
+}
+
+// Ok creates a new result with a value of any type and no error.
+func Ok(type T)(value T) Result(T) {
+	return Result(T){ Value: value }
+}	
+    
+// Err creates a new result with only an error
+func Err(type T)(err error) Result(T) {
+	return Result(T){ Err: err }
+}
+
+// Ok returns the value and ingores the error.
+func (r Result(T)) Ok() T {
+	return r.Value
+}
+
+// Error returns the error and ingores the value.
+func (r Result(T)) Error() error {
+	return r.Err
+}
+
+
+// IsOk returns true if there is no error.
+func (r Result(T)) IsOk() bool {
+	return r.Err == nil 
+}
+
+// IsErr returns true if there is an error.
+func (r Result(T)) IsErr() bool {
+	return r.Err != nil 
+}
+
+// Unwrap returns the value and the error.
+func (r Result(T)) Unwrap() (T, error) {
+	return r.Value, r.Err
+}

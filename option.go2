@@ -1,0 +1,28 @@
+package gofu
+
+// Option type can be valid or not and store the value
+type Option(type T) struct {
+	valid bool
+	value T
+}
+
+// Empty returns a new Option that is not valid.
+func Empty(type T)() Option(T) {
+	return Option(T){}
+}
+
+// New creates a new option with the given value and is valid.
+func New(type T)(value T) Option(T) {
+	return Option(T){
+		valid: true,
+		value: value,
+	}
+}
+
+// Valid returns true if the there is valid.
+func (o *Option(T)) Valid() bool { return o.valid }
+
+// Get returns the value and and bool.
+func (o *Option(T)) Get() (T, bool) {
+	return o.value, o.valid
+}
